@@ -7,7 +7,10 @@ import com.andrade.email.enums.EmailStatus;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Data;
@@ -18,8 +21,8 @@ import lombok.Data;
 public class Email {
 
     @Id
-    @GeneratedValue
-    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "id", nullable = false, updatable = false)
     private UUID emailId;
 
     @Column(name = "user_id")
@@ -34,12 +37,13 @@ public class Email {
     @Column(name = "subject")
     private String emailSubject;
 
-    @Column(name = "message", columnDefinition="TEXT")
+    @Column(name = "message", columnDefinition = "TEXT")
     private String emailBody;
 
     @Column(name = "send_time")
     private LocalDateTime sendTime;
 
     @Column(name = "status")
+    @Enumerated(EnumType.STRING)
     private EmailStatus status;
 }
